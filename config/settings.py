@@ -9,8 +9,11 @@ https://docs.djangoproject.com/en/4.1/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.1/ref/settings/
 """
-
+from environs import Env
 from pathlib import Path
+
+env = Env()
+env.read_env()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -20,12 +23,12 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-gqy=zgmfbx78n%@@$trcu12$x9)z#+)3^#=o01f*k)ht_y=@pm'
+SECRET_KEY = env.str("SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = env.bool("DEBUG")
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = env.list("ALLOWED_HOSTS")
 
 
 # Application definition
@@ -121,11 +124,6 @@ USE_I18N = True
 USE_TZ = True
 
 
-# Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/4.1/howto/static-files/
-
-STATIC_URL = 'static/'
-
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
 
@@ -144,6 +142,9 @@ REST_FRAMEWORK = {
 }
 
 # ==================   STATIC FILES SETTINGS   ========================
+# Static files (CSS, JavaScript, Images)
+# https://docs.djangoproject.com/en/4.1/howto/static-files/
+STATIC_URL = 'static/'
 STATICFILES_DIRS = [BASE_DIR / 'static']
 STATIC_ROOT = BASE_DIR / 'staticfiles'
 STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.StaticFilesStorage'
