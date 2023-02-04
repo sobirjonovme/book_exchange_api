@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     # installed apps
     'rest_framework',
     'rest_framework.authtoken',
+    'drf_yasg',
 
     # created apps
     'users_app',
@@ -141,3 +142,14 @@ REST_FRAMEWORK = {
         'rest_framework.authentication.TokenAuthentication',
     ]
 }
+
+# ==================   STATIC FILES SETTINGS   ========================
+STATICFILES_DIRS = [BASE_DIR / 'static']
+STATIC_ROOT = BASE_DIR / 'staticfiles'
+STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.StaticFilesStorage'
+# STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"  # NOT WORK for some reasons
+# STATICFILES_STORAGE = 'whitenoise.storage.CompressedStaticFilesStorage'  # WORKS WELL
+
+# MEDIA
+MEDIA_URL = '/media/'
+MEDIA_ROOT = BASE_DIR / 'media'

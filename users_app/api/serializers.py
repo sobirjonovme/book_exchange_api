@@ -25,7 +25,6 @@ class RegistrationSerializer(serializers.ModelSerializer):
                 'write_only': True,
                 'style': {"input_type": "password"},
             },
-            'first_name': {'required': True}
         }
 
     def validate(self, data):
