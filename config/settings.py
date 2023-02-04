@@ -133,7 +133,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 ################################################################################################
 # ==================   Custom User   ===============
-AUTH_USER_MODEL = 'users.CustomUser'
+AUTH_USER_MODEL = 'users_app.CustomUser'
 
 # =================   REST FRAMEWORK SETTINGS   ==============
 REST_FRAMEWORK = {
