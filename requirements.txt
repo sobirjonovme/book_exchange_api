@@ -2,3 +2,4 @@ Django==4.1.6
 djangorestframework==3.14.0
 environs==9.5.0
 drf-yasg==1.21.4
+whitenoise==6.3.0
