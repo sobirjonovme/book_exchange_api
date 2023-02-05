@@ -21,5 +21,5 @@ class Book(models.Model):
     status = models.CharField(max_length=10, choices=BOOK_STATUS)
     title = models.CharField(max_length=200)
     author = models.CharField(max_length=100)
-    image = models.ImageField()
+    image = models.ImageField(upload_to='book_images/')
     description = models.TextField()
