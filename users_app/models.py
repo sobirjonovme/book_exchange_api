@@ -30,3 +30,6 @@ class CustomUser(AbstractUser):
         }
 
         return data
+
+    def __str__(self):
+        return self.get_full_name()
