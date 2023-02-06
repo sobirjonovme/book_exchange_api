@@ -1,19 +1,26 @@
+from django.db.models import Q
 from rest_framework.generics import ListCreateAPIView, RetrieveUpdateDestroyAPIView
 from rest_framework.exceptions import APIException
 from rest_framework.permissions import IsAuthenticatedOrReadOnly
 
+from django_filters.rest_framework import DjangoFilterBackend
+
+from users_app.models import CustomUser
 from books_app.models import Book, EXIST, NEED
 from books_app.api.serializers import BookSerializer
 from books_app.api import permissions as books_permissions
 from books_app.api.pagination import BookPagination
+from books_app.api.filters import BookFilter
 
 
 class BookListAPIView(ListCreateAPIView):
-    queryset = Book.objects.all()
+    queryset = Book.objects.all().order_by('title')
     serializer_class = BookSerializer
 
     permission_classes = [IsAuthenticatedOrReadOnly]
     pagination_class = BookPagination
+    filter_backends = [DjangoFilterBackend]
+    filterset_class = BookFilter
 
     def perform_create(self, serializer):
         status = self.request.query_params.get('status')

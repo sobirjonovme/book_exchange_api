@@ -3,15 +3,14 @@ from django.db import models
 from users_app.models import CustomUser
 
 EXIST, NEED = ('exist', 'need')
+BOOK_STATUS = (
+        (EXIST, EXIST),
+        (NEED, NEED)
+    )
 
 
 # Create your models here.
 class Book(models.Model):
-
-    BOOK_STATUS = (
-        (EXIST, EXIST),
-        (NEED, NEED)
-    )
 
     owner = models.ForeignKey(
         CustomUser,

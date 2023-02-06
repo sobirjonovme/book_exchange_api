@@ -21,6 +21,7 @@ class CustomUser(AbstractUser):
     )
 
     first_name = models.CharField(_("first name"), max_length=150)
+    bio = models.TextField(null=True, blank=True)
     image = models.ImageField(upload_to="profile_images/", default='/profile_images/default_profile_pic.jpg')
     region = models.CharField(max_length=30, choices=REGIONS, default=TASHKENT_CITY)
 
