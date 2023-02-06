@@ -1,5 +1,7 @@
+from django.contrib.auth.models import AnonymousUser
 from django_filters import rest_framework as filters
 from django.db.models import Q
+from rest_framework.exceptions import AuthenticationFailed
 
 from books_app.models import Book, BOOK_STATUS, EXIST, NEED
 from users_app.models import CustomUser
@@ -21,6 +23,10 @@ class BookFilter(filters.FilterSet):
         return queryset.filter(owner__username=value)
 
     def is_match_filter(self, queryset, name, value):
+
+        if self.request.user.is_authenticated is False:
+            raise AuthenticationFailed("Authentication credentials were not provided.")
+
         if value is True:
             current_user = self.request.user
             current_user_need_books = current_user.user_books.filter(status=NEED)
