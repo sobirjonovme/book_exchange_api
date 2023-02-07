@@ -2,9 +2,10 @@ from django.db import models
 
 from users_app.models import CustomUser
 
-EXIST, NEED = ('exist', 'need')
+EXIST, USING, NEED = ('exist', 'using', 'need')
 BOOK_STATUS = (
         (EXIST, EXIST),
+        (USING, USING),
         (NEED, NEED)
     )
 
