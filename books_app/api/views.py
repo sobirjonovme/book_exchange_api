@@ -2,7 +2,9 @@ from rest_framework.generics import ListCreateAPIView, RetrieveUpdateDestroyAPIV
 from rest_framework.exceptions import APIException
 from rest_framework.permissions import IsAuthenticatedOrReadOnly
 
+from rest_framework.filters import SearchFilter
 from django_filters.rest_framework import DjangoFilterBackend
+
 
 from books_app.models import Book, EXIST, NEED
 from books_app.api.serializers import BookSerializer
@@ -17,8 +19,9 @@ class BookListAPIView(ListCreateAPIView):
 
     permission_classes = [IsAuthenticatedOrReadOnly]
     pagination_class = BookPagination
-    filter_backends = [DjangoFilterBackend]
+    filter_backends = [DjangoFilterBackend, SearchFilter]
     filterset_class = BookFilter
+    search_fields = ['title', 'author']
 
     def perform_create(self, serializer):
         status = self.request.query_params.get('status')
