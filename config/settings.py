@@ -50,6 +50,7 @@ INSTALLED_APPS = [
     # created apps
     'users_app',
     'books_app',
+    'book_exchange_app',
 
 ]
 
