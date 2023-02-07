@@ -13,6 +13,15 @@ class CustomUserSerializer(serializers.ModelSerializer):
             'first_name': {'required': True}
         }
 
+    def update(self, instance, validated_data):
+        exist_usernames = CustomUser.objects.filter(username__iexact=validated_data['username']).exclude(pk=instance.pk)
+        if exist_usernames.exists():
+            raise ValidationError({
+                'username': "A user with that username already exists.",
+            })
+
+        return super().update(instance, validated_data)
+
 
 class RegistrationSerializer(serializers.ModelSerializer):
     password2 = serializers.CharField(write_only=True, style={"input_type": "password"})
@@ -27,6 +36,11 @@ class RegistrationSerializer(serializers.ModelSerializer):
             },
         }
 
+    def validate_username(self, value):
+        if CustomUser.objects.filter(username__iexact=value).exists():
+            raise ValidationError("A user with that username already exists.")
+        return value
+
     def validate(self, data):
         # To check passwords matching
         if data['password'] != data['password2']:
@@ -35,6 +49,7 @@ class RegistrationSerializer(serializers.ModelSerializer):
         return data
 
     def save(self, **kwargs):
+        super().save()
         data = self.validated_data
         data.pop("password2")
         password = data.pop("password")

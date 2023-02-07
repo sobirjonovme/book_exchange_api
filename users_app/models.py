@@ -1,6 +1,9 @@
+from django.core.exceptions import ValidationError
 from django.utils.translation import gettext_lazy as _
 from django.contrib.auth.models import AbstractUser
 from django.db import models
+from django.contrib.auth.validators import UnicodeUsernameValidator
+from django.core.validators import MinLengthValidator
 
 from rest_framework.authtoken.models import Token
 
@@ -20,6 +23,22 @@ class CustomUser(AbstractUser):
         (TASHKENT_REGION, TASHKENT_REGION), (FERGANA, FERGANA), (XORAZM, XORAZM)
     )
 
+    username_validator = UnicodeUsernameValidator()
+    username = models.CharField(
+        _("username"),
+        max_length=150,
+        unique=True,
+        help_text=_(
+            "Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only."
+        ),
+        validators=[
+            username_validator,
+            MinLengthValidator(5, message="Username should be 5 characters at least")
+        ],
+        error_messages={
+            "unique": _("A user with that username already exists."),
+        },
+    )
     first_name = models.CharField(_("first name"), max_length=150)
     bio = models.TextField(null=True, blank=True)
     image = models.ImageField(upload_to="profile_images/", default='/profile_images/default_profile_pic.jpg')
@@ -34,4 +53,13 @@ class CustomUser(AbstractUser):
         return data
 
     def __str__(self):
-        return self.get_full_name()
+        return self.username
+
+    def clean(self):
+
+        existing_usernames = CustomUser.objects.filter(username__iexact=self.username).exclude(pk=self.pk)
+
+        if existing_usernames.exists():
+            raise ValidationError({
+                'username': _("A user with that username already exists."),
+            })

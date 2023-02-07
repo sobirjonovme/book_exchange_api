@@ -1,6 +1,4 @@
-from django.contrib.auth.models import AnonymousUser
 from django_filters import rest_framework as filters
-from django.db.models import Q
 from rest_framework.exceptions import AuthenticationFailed
 
 from books_app.models import Book, BOOK_STATUS, EXIST, NEED
