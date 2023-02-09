@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     'rest_framework.authtoken',
     'drf_yasg',
     'django_filters',
+    'corsheaders',
 
     # created apps
     'users_app',
@@ -59,6 +60,7 @@ MIDDLEWARE = [
     "whitenoise.middleware.WhiteNoiseMiddleware",  # for whitenoise
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
+    'corsheaders.middleware.CorsMiddleware',  # for django-cors-headers
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
@@ -159,3 +161,7 @@ STATICFILES_STORAGE = 'whitenoise.storage.CompressedStaticFilesStorage'  # WORKS
 # MEDIA
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
+
+# django-cors-headers settings
+CORS_ORIGIN_ALLOW_ALL = False
+CORS_ALLOWED_ORIGINS = env.list("CORS_ALLOWED_ORIGINS")
