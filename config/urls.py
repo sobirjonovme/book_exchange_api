@@ -43,6 +43,8 @@ urlpatterns = [
 
     path('users/', include('users_app.api.urls')),
     path('books/', include('books_app.api.urls')),
+    path('book-exchanges/', include('book_exchange_app.api.urls')),
+
 ]
 
 if settings.DEBUG:
