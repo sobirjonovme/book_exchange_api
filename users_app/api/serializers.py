@@ -49,7 +49,6 @@ class RegistrationSerializer(serializers.ModelSerializer):
         return data
 
     def save(self, **kwargs):
-        super().save()
         data = self.validated_data
         data.pop("password2")
         password = data.pop("password")
