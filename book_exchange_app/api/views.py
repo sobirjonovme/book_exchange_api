@@ -14,18 +14,18 @@ class BookRequestListAPIView(ListCreateAPIView):
     queryset = exch_models.BookRequest.objects.all().order_by('-created_at')
     serializer_class = exch_serializers.BookRequestSerializer
 
+    def perform_create(self, serializer):
+        serializer.save(from_user=self.request.user)
+
 
 class ResponseToBookRequest(APIView):
     def post(self, request):
         data = request.data
         user = request.user
-        print(data)
 
         book_request = get_object_or_404(exch_models.BookRequest.objects.all(), pk=data.get('book_request'))
         book = get_object_or_404(Book.objects.filter(status=EXIST), pk=data.get('book'))
 
-        print(book_request.for_book.owner)
-        print(user)
         if book_request.for_book.owner != user:
             raise PermissionDenied()
 
@@ -37,5 +37,6 @@ class ResponseToBookRequest(APIView):
         )
         book_exchange.save()
 
-        print("\n\na\n\n")
-        return Response(status=200)
+        serializer = exch_serializers.BookExchangeSerializer(book_exchange)
+
+        return Response(data=serializer.data, status=200)

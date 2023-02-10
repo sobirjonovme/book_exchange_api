@@ -47,7 +47,7 @@ class BookExchange(models.Model):
     created_at = models.DateTimeField(default=timezone.now)
 
     def __str__(self):
-        return f"{self.book1.title} | {self.book1.owner.username}  AND  {self.book2.title} | {self.book2.owner.username}"
+        return f"{self.book1.title} ({self.book1.owner.username})  ||  {self.book2.title} ({self.book2.owner.username})"
 
 
 class EndExchangeRequest(models.Model):
