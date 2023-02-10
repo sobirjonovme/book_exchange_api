@@ -3,6 +3,7 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework import status
 from rest_framework.exceptions import PermissionDenied, APIException
+from rest_framework.permissions import IsAuthenticated
 
 from book_exchange_app.api import serializers as exch_serializers
 from book_exchange_app import models as exch_models
@@ -11,14 +12,20 @@ from books_app.models import Book, EXIST
 
 
 class BookRequestListAPIView(ListCreateAPIView):
-    queryset = exch_models.BookRequest.objects.all().order_by('-created_at')
     serializer_class = exch_serializers.BookRequestSerializer
+
+    permission_classes = [IsAuthenticated]
+
+    def get_queryset(self):
+        return exch_models.BookRequest.objects.filter(for_book__owner=self.request.user)
 
     def perform_create(self, serializer):
         serializer.save(from_user=self.request.user)
 
 
 class ResponseToBookRequest(APIView):
+    permission_classes = [IsAuthenticated]
+
     def post(self, request):
         data = request.data
         user = request.user
