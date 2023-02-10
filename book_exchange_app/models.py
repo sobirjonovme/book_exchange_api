@@ -25,6 +25,12 @@ class BookRequest(models.Model):
     )
     created_at = models.DateTimeField(default=timezone.now)
 
+    class Meta:
+        ordering = ['-created_at']
+
+    def __str__(self):
+        return f"for {self.for_book.title} from {self.from_user.username}"
+
 
 class BookExchange(models.Model):
     book1 = models.ForeignKey(
@@ -39,6 +45,9 @@ class BookExchange(models.Model):
     )
     status = models.CharField(max_length=10, choices=BOOK_EXCHANGE_STATUS, default=ONGOING)
     created_at = models.DateTimeField(default=timezone.now)
+
+    def __str__(self):
+        return f"{self.book1.title} | {self.book1.owner.username}  AND  {self.book2.title} | {self.book2.owner.username}"
 
 
 class EndExchangeRequest(models.Model):
@@ -57,6 +66,3 @@ class EndExchangeRequest(models.Model):
         on_delete=models.CASCADE,
         related_name='end_exchange_requests_to_user'
     )
-
-
-
