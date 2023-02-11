@@ -29,7 +29,7 @@ class BookRequest(models.Model):
         ordering = ['-created_at']
 
     def __str__(self):
-        return f"for {self.for_book.title} from {self.from_user.username}"
+        return f"for {self.for_book.title} ({self.for_book.owner.username}) from {self.from_user.username}"
 
 
 class BookExchange(models.Model):

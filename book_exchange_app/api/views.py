@@ -17,6 +17,9 @@ from book_exchange_app.models import ONGOING
 from books_app.models import Book, EXIST, USING
 
 
+##########################################################################################
+# ### =======================  BOOK REQUESTS VIEWS  ================================   ###
+##########################################################################################
 class BookRequestListAPIView(ListCreateAPIView):
     serializer_class = exch_serializers.BookRequestSerializer
 
@@ -39,13 +42,13 @@ class BookRequestDetailAPIView(RetrieveDestroyAPIView):
 class ResponseToBookRequest(APIView):
     permission_classes = [IsAuthenticated]
 
-    def post(self, request):
+    def post(self, request, book_request_id):
         # Get objects
         data = request.data
         user = request.user
 
-        book_request = get_object_or_404(exch_models.BookRequest.objects.all(), pk=data.get('book_request'))
-        book = get_object_or_404(Book.objects.filter(status=EXIST), pk=data.get('book'))
+        book_request = get_object_or_404(exch_models.BookRequest.objects.all(), id=book_request_id)
+        book = get_object_or_404(Book.objects.filter(status=EXIST), id=data.get('book'))
 
         # Validations
         if book_request.for_book.owner != user:
@@ -71,6 +74,9 @@ class ResponseToBookRequest(APIView):
         return Response(data=serializer.data, status=status.HTTP_200_OK)
 
 
+##########################################################################################
+# ### =======================  BOOK EXCHANGE VIEWS  ===============================   ####
+##########################################################################################
 class BookExchangeListAPIView(ListAPIView):
     queryset = exch_models.BookExchange.objects.all()
     serializer_class = exch_serializers.BookExchangeSerializer
@@ -94,6 +100,9 @@ class BookExchangeDetailAPIView(RetrieveAPIView):
     permission_classes = [my_permissions.IsParticipant]
 
 
+##########################################################################################
+# ### =======================  END BOOK EXCHANGE VIEWS  ================================   ###
+##########################################################################################
 class EndExchangeRequestListAPIView(ListCreateAPIView):
     serializer_class = exch_serializers.EndExchangeRequestSerializer
 
