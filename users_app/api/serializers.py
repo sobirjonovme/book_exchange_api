@@ -8,7 +8,7 @@ class CustomUserSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = CustomUser
-        fields = ('id', 'username', 'first_name', 'last_name', 'email', 'bio', 'image')
+        fields = ('id', 'username', 'first_name', 'last_name', 'email', 'region', 'bio', 'image')
         extra_kwargs = {
             'first_name': {'required': True}
         }
@@ -28,7 +28,7 @@ class RegistrationSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = CustomUser
-        fields = ('id', 'username', 'first_name', 'last_name', 'email', 'password', 'password2', 'bio', 'image')
+        fields = ('id', 'username', 'first_name', 'last_name', 'email', 'region', 'password', 'password2', 'bio', 'image')
         extra_kwargs = {
             'password': {
                 'write_only': True,

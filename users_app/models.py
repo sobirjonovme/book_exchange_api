@@ -9,8 +9,8 @@ from rest_framework.authtoken.models import Token
 
 KARARAKALPAKISTAN, ANDIJAN, BUKHRARA, JIZZAX, QASHQADARYO, NAVOIY, NAMANGAN,\
     SAMARKAND, SURXONDARYO, SIRDARYO, TASHKENT_CITY, TASHKENT_REGION, FERGANA, XORAZM = \
-    ("Qoraqalpog'iston", "Andijon", "Buxoro", "Jizzax", "Qashqadaryo", "Navoiy", "Namangan",
-     "Samarqand", "Surxondaryo", "Sirdaryo", "Toshkent shahri", "Toshkent viloyati", "Farg'ona", "Xorazm"
+    ("Karakalpakistan", "Andijan", "Bukhara", "Djizzak", "Kashkadarya", "Navoi", "Namangan",
+     "Samarkand", "Surkhandarya", "Syrdarya", "Tashkent", "Tashkent province", "Fergana", "Khorezm"
      )
 
 
