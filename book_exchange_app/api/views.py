@@ -120,7 +120,18 @@ class ConfirmEndExchangeRequestAPIView(APIView):
     def post(self, request, end_request_id):
         user = self.request.user
         end_request = get_object_or_404(
-            exch_models.EndExchangeRequest.objects.filter(),
+            exch_models.EndExchangeRequest.objects.filter(to_user=user),
             id=end_request_id
         )
-        pass
+
+        # Change Book Exchange and books status
+        exchange = end_request.exchange
+        exchange.change_status_to_end()
+        exchange.book1.change_status(EXIST)
+        exchange.book2.change_status(EXIST)
+
+        # Delete all requests for this book_exchange
+        all_requests = exch_models.EndExchangeRequest.objects.filter(exchange=exchange)
+        all_requests.delete()
+
+        return Response(status=status.HTTP_200_OK)

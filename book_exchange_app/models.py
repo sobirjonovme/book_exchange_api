@@ -55,6 +55,10 @@ class BookExchange(models.Model):
     def is_participant(self, user):
         return self.book1.owner == user or self.book2.owner == user
 
+    def change_status_to_end(self):
+        self.status = END
+        self.save()
+
 
 class EndExchangeRequest(models.Model):
     exchange = models.ForeignKey(
