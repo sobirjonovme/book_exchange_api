@@ -6,7 +6,7 @@ The site allows users to register, add books they have (i.e. books they can lend
 
 The API includes a powerful filter that allows users to find other users who have books they need and who need books they have.
 
-Link for the clone: [Book Exchange API](http://bookexchangeapi.pythonanywhere.com/)
+Link for the API: [Book Exchange API](http://bookexchangeapi.pythonanywhere.com/)
 
 ## Technologies Used
 
