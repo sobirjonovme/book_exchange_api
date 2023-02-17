@@ -18,7 +18,7 @@ The API includes a powerful filter that allows users to find other users who hav
 1. Clone the repository to your local machine.
 2. Create and activate a virtual environment.
 3. Install the dependencies using the command: `pip install -r requirements.txt`.
-4. Create a .env file using the .env.example file and provide your own environment variables.
+4. Create a `.env` file using the `.env.example` file and provide your own environment variables.
 5. Run the server using the command: `python manage.py runserver`.
 
 ## API Authentication
